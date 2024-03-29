@@ -1,6 +1,6 @@
 <?php
 
-class CirnoObject
+abstract class CirnoObject
 {
 	private $cirno = NULL;
 
