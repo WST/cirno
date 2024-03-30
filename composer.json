@@ -6,7 +6,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WST\\Cirno\\": "src/"
+            "Averkov\\Cirno\\": "src/"
         }
     }
 }
