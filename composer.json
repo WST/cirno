@@ -1,9 +1,10 @@
 {
-	"name": "averkov/cirno",
+    "name": "averkov/cirno",
+    "description": "A small web application framework",
     "require": {
         "psr/http-message": "^2.0"
     },
-	"autoload": {
+    "autoload": {
         "psr-4": {
             "Cirno\\": "src/"
         }
