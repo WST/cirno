@@ -1,6 +1,6 @@
 <?php
 
-namespace Cirno;
+namespace WST\Cirno;
 
 class DB extends CirnoObject
 {
