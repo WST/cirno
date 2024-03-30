@@ -1,6 +1,6 @@
 <?php
 
-namespace WST\Cirno;
+namespace Averkov\Cirno;
 
 class Cirno
 {
