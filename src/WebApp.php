@@ -2,6 +2,10 @@
 
 namespace Averkov\Cirno;
 
+// We are using Symfony’s HTTP Foundation as the implementation of the HTTP message interface
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Web application
  */
@@ -29,9 +33,36 @@ abstract class WebApp
 
 	/**
 	 * Run the application
+	 * TODO: FastCGI / PHP-SGI (uWSGI) mode
 	 */
 	public function run() {
+		$request = Request::createFromGlobals();
+		return $this->handleRequest($request);
+	}
 
+	private function selectHandler(Request $request) {
+		return [$this, 'defaultRouteHandler'];
+	}
+
+	/**
+	 * Handle a sligle HTTP request
+	 */
+	private function handleRequest(Request $request) {
+		// Any request handling results in creating a response
+		$response = new Response('', Response::HTTP_OK, ['content-type' => 'text/html']);
+		$response->setCharset('UTF-8');
+
+		// Selecting the handler based on the route map
+		$handler = $this->selectHandler($request);
+
+		// Calling the handler
+		$result = $handler($request, $response);
+
+		// Sending the response back to the client
+		$response->send();
+
+		// We are done
+		return $result;
 	}
 
 	/**
@@ -56,6 +87,6 @@ abstract class WebApp
 	 * Handler of the default route
 	 */
 	private function defaultRouteHandler($request, $response) {
-		
+		$response->setContent('Hello, I am Cirno');
 	}
 }
