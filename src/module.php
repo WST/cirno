@@ -2,7 +2,7 @@
 
 namespace Cirno;
 
-abstract class Module extends Object
+abstract class Module extends CirnoObject
 {
 	// Modules set up routes
 	abstract public function setRouteMap();

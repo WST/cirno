@@ -1,5 +1,7 @@
 <?php
 
+namespace Cirno;
+
 abstract class CirnoObject
 {
 	private $cirno = NULL;

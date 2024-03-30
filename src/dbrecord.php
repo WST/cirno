@@ -2,7 +2,7 @@
 
 namespace Cirno;
 
-class DBRecord extends Object
+class DBRecord extends CirnoObject
 {
 
 }
