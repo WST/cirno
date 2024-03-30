@@ -2,15 +2,12 @@
 
 namespace Averkov\Cirno;
 
-abstract class Module extends CirnoObject
+abstract class WebModule extends CirnoObject
 {
 	// Modules set up routes
-	abstract public function setRouteMap();
+	abstract public function getRouteMap();
 
 	public function __construct(Cirno $cirno) {
 		parent::__construct($cirno);
-
-		// Configuring route map
-		self::setRouteMap();
 	}
 }
