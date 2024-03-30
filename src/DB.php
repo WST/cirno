@@ -2,7 +2,7 @@
 
 namespace Averkov\Cirno;
 
-class DB extends CirnoObject
+abstract class DB extends CirnoObject
 {
 	// Actual database object
 	private $link = NULL;
