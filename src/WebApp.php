@@ -63,7 +63,9 @@ abstract class WebApp
 		$handler = $this->selectHandler($request);
 
 		// Calling the handler
-		$result = $handler($request, $response);
+		isset($handler[1]) ?
+			call_user_func($handler[0], $request, $response, $handler[1]) :
+			call_user_func($handler[0], $request, $response);
 
 		// Now, we pass the response through the middleware as well
 		foreach($this->middleware as $middleware) {
@@ -82,7 +84,7 @@ abstract class WebApp
 	 */
 	public function get() {
 		$args = func_get_args();
-		$this->routes['get'][$args[0]] =
+		$this->routes['GET'][$args[0]] =
 			(count($args) == 2) ? $args[1] : ((count($args) == 3) ? [$args[1], $args[2]] : [$args[1], $args[2], $args[3]]);
 	}
 	
@@ -91,7 +93,7 @@ abstract class WebApp
 	 */
 	public function post() {
 		$args = func_get_args();
-		$this->routes['post'][$args[0]] =
+		$this->routes['POST'][$args[0]] =
 			(count($args) == 2) ? $args[1] : ((count($args) == 3) ? [$args[1], $args[2]] : [$args[1], $args[2], $args[3]]);
 	}
 
