@@ -123,7 +123,7 @@ abstract class WebApp
 		
 		$request_path = $request->getRequestUri();
 		if(($pos = strpos($request_path, '?')) !== false) $request_path = substr($request_path, 0, $pos);
-		foreach($this->routes[$type] as $k => $v) {
+		foreach($this->routes[$method] as $k => $v) {
 			$pattern = preg_replace(['#(:[a-z_]+?)#iU', '#(%[a-z_]+?)#iU'], ['([^/]+)', '([\\d]+)'], $k);
 			$matches = [];
 			if(preg_match("#^$pattern$#", $request_path, $matches)) {
