@@ -14,13 +14,7 @@ abstract class DB extends CirnoObject
 		$this->config = $config;
 	}
 
-	public function connect() {
-		if(!is_null($this->link)) {
-			return true;
-		}
-
-		$this->link = new PDO();
-	}
+	abstract public function connect();
 
 	public function queryAll($sql) {
 
