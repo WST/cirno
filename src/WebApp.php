@@ -63,7 +63,7 @@ abstract class WebApp
 		$handler = $this->selectHandler($request);
 
 		// Calling the handler
-		isset($handler[1]) ?
+		$result = isset($handler[1]) ?
 			call_user_func($handler[0], $request, $response, $handler[1]) :
 			call_user_func($handler[0], $request, $response);
 
