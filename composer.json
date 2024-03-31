@@ -3,7 +3,8 @@
     "description": "A small web application framework",
     "require": {
         "psr/http-message": "^2.0",
-        "symfony/http-foundation": "^7.0"
+        "symfony/http-foundation": "^7.0",
+        "twig/twig": "^3.0"
     },
     "autoload": {
         "psr-4": {
