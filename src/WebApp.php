@@ -34,7 +34,7 @@ abstract class WebApp
 	 * Configure the app’s default route table
 	 */
 	private function initDefaultRoutes() {
-		$this->routes['get']['/'] = [$this, 'defaultRouteHandler'];
+		$this->routes['GET']['/'] = [$this, 'defaultRouteHandler'];
 	}
 
 	/**
@@ -116,7 +116,7 @@ abstract class WebApp
 	}
 	
 	private function selectHandler(Request $request) {
-		$method = $request->method();
+		$method = $request->getMethod();
 		if(!array_key_exists($method, $this->routes)) {
 			throw new CirnoException("Unsupported request method {$method}");
 		}
