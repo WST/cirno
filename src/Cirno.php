@@ -24,4 +24,8 @@ class Cirno
 	public function openDatabase(string $filename, string $link_name = 'default') {
 
 	}
+
+	public function loadModule(string $module_name) {
+		
+	}
 }

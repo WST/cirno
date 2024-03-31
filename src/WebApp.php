@@ -17,6 +17,12 @@ abstract class WebApp
 	// Application’s route map
 	private $routes = [];
 
+	// Middleware
+	private $middleware = [];
+
+	// Primary database
+	private $db = NULL;
+
 	public function __construct() {
 		$this->cirno = new Cirno;
 
@@ -48,11 +54,21 @@ abstract class WebApp
 		$response = new Response('', Response::HTTP_OK, ['content-type' => 'text/html']);
 		$response->setCharset('UTF-8');
 
+		// First, we pass the request through the middleware
+		foreach($this->middleware as $middleware) {
+			$middleware->handleRequest($request, $response);
+		}
+
 		// Selecting the handler based on the route map
 		$handler = $this->selectHandler($request);
 
 		// Calling the handler
 		$result = $handler($request, $response);
+
+		// Now, we pass the response through the middleware as well
+		foreach($this->middleware as $middleware) {
+			$middleware->handleResponse($request, $response);
+		}
 
 		// Sending the response back to the client
 		$response->send();
@@ -78,7 +94,10 @@ abstract class WebApp
 		$this->routes['post'][$args[0]] =
 			(count($args) == 2) ? $args[1] : ((count($args) == 3) ? [$args[1], $args[2]] : [$args[1], $args[2], $args[3]]);
 	}
-	
+
+	/**
+	 * Route GET and POST into a handler
+	 */
 	public function gp() {
 		switch(count($args = func_get_args())) {
 			case 2:
@@ -134,9 +153,25 @@ abstract class WebApp
 	}
 
 	/**
+	 * 
+	 */
+	public function loadMiddleware(string $middleware_name): bool {
+		// If the class doesn’t exist — we obviously can’t load it
+		if(!class_exists($middleware_name)) return false;
+
+		// Only Middleware children instances are allowed
+		if(!is_a($middleware_name, 'Middleware')) return false;
+
+		$middleware = new $middleware_name($this->cirno);
+		$this->middleware[$middleware_name] = $middleware;
+
+		return true;
+	}
+
+	/**
 	 * Handler of the default route
 	 */
 	private function defaultRouteHandler($request, $response) {
-		$response->setContent("Hello, I am Cirno\n");
+		$response->setContent('Hello, I am Cirno');
 	}
 }
