@@ -137,6 +137,6 @@ abstract class WebApp
 	 * Handler of the default route
 	 */
 	private function defaultRouteHandler($request, $response) {
-		$response->setContent('Hello, I am Cirno');
+		$response->setContent("Hello, I am Cirno\n");
 	}
 }

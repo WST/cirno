@@ -21,4 +21,16 @@ abstract class DB extends CirnoObject
 
 		$this->link = new PDO();
 	}
+
+	public function queryAll($sql) {
+
+	}
+
+	public function queryOne($sql) {
+
+	}
+
+	public function dropTable(string $table_name) {
+
+	}
 }
