@@ -16,7 +16,7 @@ abstract class DBQueryResult extends CirnoObject
 	 * Get a result row as an instance of $class_name
 	 * @param string $class_name class name
 	 */
-	public function fetchObject(string $class_name) {
+	public function fetchObject(string $class_name): DBRecord|false {
 
 	}
 
