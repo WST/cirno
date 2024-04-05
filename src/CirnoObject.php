@@ -9,4 +9,8 @@ abstract class CirnoObject
 	public function __construct(Cirno $cirno) {
 		$this->cirno = $cirno;
 	}
+
+	public function getCirno() {
+		return $this->cirno;
+	}
 }

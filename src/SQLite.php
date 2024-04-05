@@ -11,4 +11,8 @@ class SQLite extends DB
 
 		$this->link = new PDO("sqlite:test.db");
 	}
+
+	public function quote(string $str): string {
+		return $this->link->quote($str);
+	}
 }
