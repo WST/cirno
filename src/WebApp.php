@@ -3,6 +3,7 @@
 namespace Averkov\Cirno;
 
 // We are using Symfony’s HTTP Foundation as the implementation of the HTTP message interface
+use Averkov\Cirno\Html\ErrorPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,13 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class WebApp
 {
 	// Cirno instance
-	protected $cirno = NULL;
+	protected ?Cirno $cirno = NULL;
 
 	// Application’s route map
-	protected $routes = [];
+	protected array $routes = [];
 
 	// Middleware
-	protected $middleware = [];
+	protected array $middleware = [];
 
 	// Primary database
 	protected $db = NULL;
@@ -26,14 +27,14 @@ abstract class WebApp
 	public function __construct() {
 		$this->cirno = new Cirno;
 
-		// Configure the deafult routes
+		// Configure the default routes
 		$this->initDefaultRoutes();
 	}
 
 	/**
 	 * Configure the app’s default route table
 	 */
-	private function initDefaultRoutes() {
+	private function initDefaultRoutes(): void {
 		$this->routes['GET']['/'] = [$this, 'defaultRouteHandler'];
 	}
 
@@ -49,8 +50,10 @@ abstract class WebApp
 	/**
 	 * Handle a single HTTP request
 	 * @param Request $request
+	 * @return mixed
+	 * @throws CirnoException
 	 */
-	private function handleRequest(Request $request) {
+	private function handleRequest(Request $request): mixed {
 		// Any request handling results in creating a response
 		$response = new Response('', Response::HTTP_OK, ['content-type' => 'text/html']);
 		$response->setCharset('UTF-8');
@@ -117,7 +120,11 @@ abstract class WebApp
 			break;
 		}
 	}
-	
+
+	/**
+	 * @param Request $request
+	 * @throws CirnoException
+	 */
 	private function selectHandler(Request $request) {
 		$method = $request->getMethod();
 		if(!array_key_exists($method, $this->routes)) {
@@ -155,10 +162,10 @@ abstract class WebApp
 
 		// Loading the routes declared by the module
 		foreach($routes as $item) {
-			$method = strtolower($item[0]);
+			$method = strtoupper($item[0]);
 			$path = $item[1];
 			$handler = $item[2];
-			$this->$method($path, $handler);
+			$this->routes[$method][$path] = $handler;
 		}
 
 		// Everything was successful
@@ -175,11 +182,13 @@ abstract class WebApp
 		if(!class_exists($middleware_name)) return false;
 
 		// Only Middleware children instances are allowed
-		if(!is_subclass_of($middleware_name, 'Middleware')) return false;
+		if(!is_subclass_of($middleware_name, 'Averkov\Cirno\Middleware')) return false;
 
+		// Initializing the middleware
 		$middleware = new $middleware_name($this->cirno);
 		$this->middleware[$middleware_name] = $middleware;
 
+		// Loading was successful
 		return true;
 	}
 
@@ -188,7 +197,8 @@ abstract class WebApp
 	 * @param Request $request
 	 * @param Response $response
 	 */
-	private function defaultRouteHandler($request, $response) {
-		$response->setContent('Hello, I am Cirno');
+	private function defaultRouteHandler($request, $response): void {
+		$page = new ErrorPage;
+		$response->setContent($page);
 	}
 }

@@ -5,10 +5,14 @@ namespace Averkov\Cirno;
 use Averkov\Cirno\DB\DB;
 use Averkov\Cirno\DB\SQLite;
 
+define('CIRNO_ROOT', __DIR__);
+
 class Cirno
 {
 	// Links with the databases
-	private $dbs = [];
+	private array $dbs = [];
+
+	private array $modules = [];
 
 	public function __construct() {
 
@@ -42,7 +46,13 @@ class Cirno
 		return $link;
 	}
 
-	public function loadModule(string $module_name) {
-		
+	public function loadModule(string $module_name, $instance_name = null): bool {
+		if(is_null($instance_name)) {
+			$instance_name = $module_name;
+		}
+		$module = new $module_name;
+		$module->setInstanceName($instance_name);
+		$this->modules[$instance_name] = $module;
+		return true;
 	}
 }
