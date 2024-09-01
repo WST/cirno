@@ -138,6 +138,8 @@ abstract class WebApp
 
 	/**
 	 * Load a so-called web module — a class that defines a set of URL routes
+	 * @param string $module_name name of the module to load
+	 * @return bool module load status
 	 */
 	public function loadWebModule(string $module_name): bool {
 		// If the class doesn’t exist — we obviously can’t load it
@@ -155,7 +157,9 @@ abstract class WebApp
 	}
 
 	/**
-	 * 
+	 * Load a middleware
+	 * @param string $middleware_name name of the middleware to load
+	 * @return bool middleware load status
 	 */
 	public function loadMiddleware(string $middleware_name): bool {
 		// If the class doesn’t exist — we obviously can’t load it
@@ -172,6 +176,8 @@ abstract class WebApp
 
 	/**
 	 * Handler of the default route
+	 * @param Request $request
+	 * @param Response $response
 	 */
 	private function defaultRouteHandler($request, $response) {
 		$response->setContent('Hello, I am Cirno');
