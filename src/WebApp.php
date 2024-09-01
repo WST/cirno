@@ -12,16 +12,16 @@ use Symfony\Component\HttpFoundation\Response;
 abstract class WebApp
 {
 	// Cirno instance
-	private $cirno = NULL;
+	protected $cirno = NULL;
 
 	// Application’s route map
-	private $routes = [];
+	protected $routes = [];
 
 	// Middleware
-	private $middleware = [];
+	protected $middleware = [];
 
 	// Primary database
-	private $db = NULL;
+	protected $db = NULL;
 
 	public function __construct() {
 		$this->cirno = new Cirno;
@@ -47,7 +47,8 @@ abstract class WebApp
 	}
 
 	/**
-	 * Handle a sligle HTTP request
+	 * Handle a single HTTP request
+	 * @param Request $request
 	 */
 	private function handleRequest(Request $request) {
 		// Any request handling results in creating a response
@@ -146,11 +147,19 @@ abstract class WebApp
 		if(!class_exists($module_name)) return false;
 
 		// Only WebModule children instances are allowed
-		if(!is_a($module_name, 'WebModule')) return false;
+		if(!is_subclass_of($module_name, 'Averkov\Cirno\WebModule')) return false;
 
 		// Initializing the module
 		$module = new $module_name($this->cirno);
 		$routes = $module->getRouteMap();
+
+		// Loading the routes declared by the module
+		foreach($routes as $item) {
+			$method = strtolower($item[0]);
+			$path = $item[1];
+			$handler = $item[2];
+			$this->$method($path, $handler);
+		}
 
 		// Everything was successful
 		return true;
@@ -166,7 +175,7 @@ abstract class WebApp
 		if(!class_exists($middleware_name)) return false;
 
 		// Only Middleware children instances are allowed
-		if(!is_a($middleware_name, 'Middleware')) return false;
+		if(!is_subclass_of($middleware_name, 'Middleware')) return false;
 
 		$middleware = new $middleware_name($this->cirno);
 		$this->middleware[$middleware_name] = $middleware;
