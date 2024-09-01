@@ -1,11 +1,14 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\DB;
+
+use Averkov\Cirno\CirnoObject;
+use Averkov\Cirno\Console;
 
 /**
  * Database manager is responsible for performing database migrations
  */
-class DBManager extends CirnoObject
+class Manager extends CirnoObject
 {
 	private $db = NULL;
 

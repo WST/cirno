@@ -1,6 +1,6 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\DB;
 
 class PostgreSQL extends DB
 {

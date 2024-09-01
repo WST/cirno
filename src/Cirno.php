@@ -2,6 +2,8 @@
 
 namespace Averkov\Cirno;
 
+use Averkov\Cirno\DB\DB;
+
 class Cirno
 {
 	// Links with the databases

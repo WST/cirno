@@ -1,8 +1,11 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\DB;
 
-abstract class DBQueryResult extends CirnoObject
+use Averkov\Cirno\Cirno;
+use Averkov\Cirno\CirnoObject;
+
+abstract class QueryResult extends CirnoObject
 {
 	// Parent DB object
 	private $db = NULL;
@@ -16,7 +19,7 @@ abstract class DBQueryResult extends CirnoObject
 	 * Get a result row as an instance of $class_name
 	 * @param string $class_name class name
 	 */
-	public function fetchObject(string $class_name): DBRecord|false {
+	public function fetchObject(string $class_name): Record|false {
 
 	}
 

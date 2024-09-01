@@ -1,11 +1,11 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\DB;
 
 /**
  * A database table record with an one-field integer surrogate primary key (ID)
  */
-class SurrogateDBRecord extends DBRecord
+class SurrogateRecord extends Record
 {
 
 }

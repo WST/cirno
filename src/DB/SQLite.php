@@ -1,6 +1,8 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\DB;
+
+use Averkov\Cirno\PDO;
 
 class SQLite extends DB
 {

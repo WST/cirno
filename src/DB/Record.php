@@ -1,11 +1,14 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\DB;
+
+use Averkov\Cirno\ArrayAccess;
+use Averkov\Cirno\CirnoObject;
 
 /**
  * A database table record
  */
-class DBRecord extends CirnoObject implements ArrayAccess
+class Record extends CirnoObject implements ArrayAccess
 {
 	/**
 	 * Имя таблички, хранящей объекты данного типа
