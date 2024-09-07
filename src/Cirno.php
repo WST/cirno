@@ -34,6 +34,10 @@ class Cirno
 		return $link;
 	}
 
+	public function getDatabaseLink(string $link_name = 'default') {
+		return $this->dbs[$link_name];
+	}
+
 	/**
 	 * Open a SQLite database
 	 * @param string $filename database file name
