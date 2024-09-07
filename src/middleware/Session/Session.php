@@ -1,6 +1,8 @@
 <?php
 
-namespace Averkov\Cirno;
+namespace Averkov\Cirno\Middleware;
+
+use Averkov\Cirno\Middleware;
 
 class Session extends Middleware
 {

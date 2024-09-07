@@ -25,7 +25,7 @@ abstract class WebApp
 	protected $db = NULL;
 
 	public function __construct() {
-		$this->cirno = new Cirno;
+		$this->cirno = Cirno::getInstance();
 
 		// Configure the default routes
 		$this->initDefaultRoutes();

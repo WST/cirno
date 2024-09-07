@@ -9,6 +9,8 @@ define('CIRNO_ROOT', __DIR__);
 
 class Cirno
 {
+	private static $instance = null;
+
 	// Links with the databases
 	private array $dbs = [];
 
@@ -54,5 +56,15 @@ class Cirno
 		$module->setInstanceName($instance_name);
 		$this->modules[$instance_name] = $module;
 		return true;
+	}
+
+	/**
+	 * @return Cirno framework core instance
+	 */
+	public static function getInstance(): Cirno {
+		if(is_null(self::$instance)) {
+			self::$instance = new self;
+		}
+		return self::$instance;
 	}
 }
